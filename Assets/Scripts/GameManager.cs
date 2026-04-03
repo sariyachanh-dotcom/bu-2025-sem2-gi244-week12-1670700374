@@ -1,4 +1,3 @@
-// notice ... List class requires System.Collections.Generic namespace
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,7 +33,15 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        scoreText.text = "Score : " + score;
         StartGame();
+    }
+
+    public void UpdateScore(int score)
+    {
+        //score =+ score_;
+        this.score += score;
+        scoreText.text = "Score: " + this.score;
     }
 
     void StartGame()
@@ -44,7 +51,12 @@ public class GameManager : MonoBehaviour
 
     IEnumerator SpawnTargets()
     {
-        yield return null;
+        while (true)
+        {
+            int idx = Random.Range(0, targets.Count);
+            var prefab = targets[idx];
+            Instantiate(prefab);
+            yield return new WaitForSeconds(spawnRate);
+        }
     }
 }
-
